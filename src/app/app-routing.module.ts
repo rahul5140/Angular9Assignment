@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { UpdateUserComponent } from './user/update-user/update-user.component';
 import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { RegisterUserComponent } from './user/register-user/register-user.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 
 const appRoutes: Routes = [
@@ -12,6 +13,7 @@ const appRoutes: Routes = [
   { path: 'update', component: UpdateUserComponent },
   { path: 'profile', component: ViewProfileComponent },
   { path: 'register', component: RegisterUserComponent },
+  { path: 'updatePassword', component: UpdatePasswordComponent },
 ];
 
 

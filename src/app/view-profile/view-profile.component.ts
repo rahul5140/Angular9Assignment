@@ -25,7 +25,7 @@ export class ViewProfileComponent implements OnInit {
   constructor(private notifyService: NotificationService, private http: HttpService, private router: Router, private storage: StorageService) {
     const storageData = this.storage.getData('user');
     this.userProfile1 = (storageData && storageData.length > 10) ? JSON.parse(storageData) : false;
-    this.http.getUserDetails(this.userProfile1.user.token).subscribe((response: any) => {
+    this.http.getUserDetails().subscribe((response: any) => {
       if (response) {
         this.userProfile = response;
       }
@@ -51,5 +51,9 @@ export class ViewProfileComponent implements OnInit {
   onSelect(feature) {
     this.isOpen = true;
     this.router.navigate(['/update'],  feature);
+  }
+
+  onUpdatePassword(){
+    this.router.navigate(['/updatePassword']);
   }
 }

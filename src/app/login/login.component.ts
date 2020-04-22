@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   loadedFeature = 'login';
   title = 'toaster-not';
   // tslint:disable-next-line:max-line-length
-  constructor(private notifyService : NotificationService, private fb: FormBuilder, private httpService: HttpService, private router: Router, private storage: StorageService) {
+  constructor(private notifyService: NotificationService, private fb: FormBuilder, private httpService: HttpService, private router: Router, private storage: StorageService) {
     this.initFormController();
   }
 

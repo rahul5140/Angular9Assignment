@@ -20,7 +20,6 @@ export class UpdateUserComponent implements OnInit {
   @ViewChild('lastName') lastNameInputRef: ElementRef;
   @ViewChild('mobile') mobileInputRef: ElementRef;
   @ViewChild('email') emailInputRef: ElementRef;
-  @ViewChild('password') passwordInputRef: ElementRef;
   @ViewChild('city') cityInputRef: ElementRef;
   @ViewChild('age') ageInputRef: ElementRef;
   @ViewChild('userName') userNameInputRef: ElementRef;
@@ -32,7 +31,7 @@ export class UpdateUserComponent implements OnInit {
   ngOnInit(): void {
     const storageData = this.storage.getData('user');
     this.userProfile1 = (storageData && storageData.length > 10) ? JSON.parse(storageData) : false;
-    this.httpService.getUserDetails(this.userProfile1.user.token).subscribe((response: any) => {
+    this.httpService.getUserDetails().subscribe((response: any) => {
       if (response) {
         this.userProfile = response;
       }
@@ -47,16 +46,15 @@ export class UpdateUserComponent implements OnInit {
       lastName: this.lastNameInputRef.nativeElement.value,
       mobile: this.mobileInputRef.nativeElement.value,
       email: this.emailInputRef.nativeElement.value,
-      password: this.passwordInputRef.nativeElement.value,
       city: this.cityInputRef.nativeElement.value,
       age: this.ageInputRef.nativeElement.value,
-      userName: this.userNameInputRef.nativeElement.value,
-      token: this.extraParameters.token }
+      userName: this.userNameInputRef.nativeElement.value
+      }
     };
     this.httpService.updateProfile(this.reqBody).subscribe((res: ResponseObject) => {
       if (res.user){
-      this.notifyService.showSuccess("Update successfully !!", "Success");
-      this.router.navigate(['/profile']);
+       this.router.navigate(['/profile']);
+       this.notifyService.showSuccess("Update successfully !!", "Success");
       }
       this.notifyService.showError("Something went wrong !!!"  , "Error");
     });

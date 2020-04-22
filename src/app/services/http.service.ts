@@ -8,8 +8,10 @@ import { StorageService } from './storage.service';
 })
 export class HttpService {
   public userProfile;
-  constructor(private httpClient: HttpClient,  private storage: StorageService) { }
-
+  public token;
+  constructor(private httpClient: HttpClient,  private storage: StorageService) {
+    this.getProfile();
+   }
   /**
    *
    * @param userData user Data
@@ -22,7 +24,7 @@ export class HttpService {
   getProfile() {
     const storageData = this.storage.getData('user');
     this.userProfile = (storageData && storageData.length > 10) ? JSON.parse(storageData) : false;
-    console.log('user', this.userProfile);
+    this.token = this.userProfile.user ? this.userProfile.user.token : null;
   }
 
   /**
@@ -31,9 +33,9 @@ export class HttpService {
    */
   updateProfile(userData) {
     const header = new HttpHeaders({
-      Authorization: `Token ${userData.user.token}`
+      Authorization: this.token
     });
-    return this.httpClient.put(`${URL.apiURL}/user`, userData, { headers: header } );
+    return this.httpClient.put(`${URL.apiURL}/update`, userData, { headers: header } );
   }
 
 
@@ -45,11 +47,18 @@ export class HttpService {
     return this.httpClient.post(`${URL.apiURL}/users`, userData);
   }
 
-  getUserDetails(userData){
+  getUserDetails(){
     const header = new HttpHeaders({
-      Authorization: `Token ${userData}`
+      Authorization: this.token
     });
     return this.httpClient.get(`${URL.apiURL}/user`, { headers: header } );
+  }
+
+  updatePassword(userData){
+    const header = new HttpHeaders({
+      Authorization: this.token
+    });
+    return this.httpClient.put(`${URL.apiURL}/updatePassword`, userData, { headers: header } );
   }
 }
 
