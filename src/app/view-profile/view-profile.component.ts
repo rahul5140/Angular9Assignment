@@ -23,6 +23,10 @@ export class ViewProfileComponent implements OnInit {
   @Output() featureSelected = new EventEmitter<string>();
   // tslint:disable-next-line:max-line-length
   constructor(private notifyService: NotificationService, private http: HttpService, private router: Router, private storage: StorageService) {
+   
+  }
+
+  ngOnInit(): void {
     const storageData = this.storage.getData('user');
     this.userProfile1 = (storageData && storageData.length > 10) ? JSON.parse(storageData) : false;
     this.http.getUserDetails().subscribe((response: any) => {
@@ -32,9 +36,6 @@ export class ViewProfileComponent implements OnInit {
     }, (err) => {
       this.showLoader = false;
     });
-  }
-
-  ngOnInit(): void {
   }
 
 

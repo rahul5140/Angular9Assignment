@@ -9,7 +9,12 @@
       </legend><br>
 
       <!-- Text input-->
-
+      <div class="form-group">
+        <img class="card-img-top" [src]="userProfile.profileURL" alt="Card image">
+        <div class="upload-btn-wrapper" >
+            <input type="file" name="avatar" (change)="onFileChange($event)" />
+        </div>
+      </div>  {{userProfile.profileURL}}
       <div class="form-group">
         <label class="col-md-4 control-label">First Name</label>
         <div class="col-md-4 inputGroupContainer">

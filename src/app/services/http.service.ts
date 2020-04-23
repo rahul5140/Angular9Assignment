@@ -60,5 +60,12 @@ export class HttpService {
     });
     return this.httpClient.put(`${URL.apiURL}/updatePassword`, userData, { headers: header } );
   }
+
+  uploadAvatar(formData) {
+    const header = new HttpHeaders({
+      Authorization: this.token
+    });
+    return this.httpClient.post(`${URL.apiURL}/uploadImage`, formData, { headers: header });
+  }
 }
 

@@ -14,8 +14,12 @@ export class UpdateUserComponent implements OnInit {
   public extraParameters: any;
   public userProfile1;
   public userProfile;
-  public reqBody: any;
+  public showProfile = false;
+  public showPasswordComponent = false;
+  public showUploadButton = false;
+  public showLoader = false;
   public title = 'toaster-not';
+  public reqBody: any;
   @ViewChild('firstName') firstNameInputRef: ElementRef;
   @ViewChild('lastName') lastNameInputRef: ElementRef;
   @ViewChild('mobile') mobileInputRef: ElementRef;
@@ -54,9 +58,24 @@ export class UpdateUserComponent implements OnInit {
     this.httpService.updateProfile(this.reqBody).subscribe((res: ResponseObject) => {
       if (res.user){
        this.router.navigate(['/profile']);
-       this.notifyService.showSuccess("Update successfully !!", "Success");
+       this.notifyService.showSuccess('Update successfully !!', 'Success');
       }
-      this.notifyService.showError("Something went wrong !!!"  , "Error");
+      this.notifyService.showError('Something went wrong !!!'  , 'Error');
     });
-  }
+    }
+
+    onFileChange(evt){
+      console.log('Event taret value', evt.target.files);
+      if (evt.target.files.length > 0) {
+        this.showLoader = true;
+        const formData = new FormData();
+        formData.append('avatar', evt.target.files[0]);
+        this.httpService.uploadAvatar(formData).subscribe((response: any) => {
+            console.log('Event taret value', response.profileUrl);
+            this.userProfile.profileURL = response.profileUrl;
+            this.storage.setData('user', JSON.stringify(this.userProfile));
+          });
+      }
+    }
+
 }
